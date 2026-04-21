@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hapvida NDI | Consultoria Leonardo Aguiar</title>
+    <style>
+        :root {
+            --azul-deep: #002d4d;
+            --azul-vibrante: #004d80;
+            --laranja: #f26522;
+            --laranja-hover: #d9531e;
+            --bg-light: #f8fafc;
+            --texto: #1e293b;
+            --branco: #ffffff;
+            --premium-gold: #c5a059;
+            --roxo-advance: #8E44AD;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--texto); line-height: 1.6; overflow-x: hidden; }
+
+        /* Hero */
+        .hero { 
+            background: radial-gradient(circle at top right, var(--azul-vibrante), var(--azul-deep));
+            color: var(--branco); padding: 100px 20px; text-align: center;
+            clip-path: ellipse(150% 100% at 50% 0%);
+        }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 20px; font-weight: 800; }
+        .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto 40px; opacity: 0.9; }
+
+        /* Botões */
+        .btn { 
+            display: inline-block; background: var(--laranja); color: white; padding: 16px 40px; 
+            font-size: 1rem; font-weight: 700; text-decoration: none; border-radius: 50px; 
+            transition: 0.3s; border: none; cursor: pointer; box-shadow: 0 8px 15px rgba(242, 101, 34, 0.2);
+            text-align: center;
+        }
+        .btn:hover { background: var(--laranja-hover); transform: translateY(-2px); }
+
+        /* Seções */
+        .secao { padding: 80px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        .secao-bg { background: var(--branco); border-radius: 60px 60px 0 0; }
+        .secao h2 { font-size: 2rem; margin-bottom: 40px; color: var(--azul-deep); font-weight: 800; }
+
+        /* Abas */
+        .tabs-container { display: inline-flex; background: #e2e8f0; padding: 5px; border-radius: 50px; margin-bottom: 40px; }
+        .tab-btn { border: none; padding: 12px 25px; border-radius: 40px; font-weight: 700; cursor: pointer; background: transparent; color: #64748b; }
+        .tab-btn.active { background: var(--branco); color: var(--azul-vibrante); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        /* Cards Planos */
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .plano-escondido { display: none !important; }
+        .card { 
+            background: var(--branco); padding: 35px; border-radius: 20px; box-shadow: var(--shadow);
+            text-align: left; transition: 0.4s; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.03);
+            position: relative; overflow: hidden;
+        }
+        .card:hover { transform: translateY(-10px); }
+        .card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: #cbd5e1; }
+        .card-smart::before { background: var(--azul-vibrante); }
+        .card-advance::before { background: var(--roxo-advance); }
+        .card-premium::before { background: var(--premium-gold); }
+
+        .card h3 { font-size: 1.4rem; margin-bottom: 15px; color: var(--azul-deep); font-weight: 800; }
+        .card ul { list-style: none; margin-bottom: 25px; flex-grow: 1; }
+        .card li { font-size: 0.9rem; margin-bottom: 10px; color: #475569; display: flex; gap: 8px; }
+        .card li::before { content: "✓"; color: #10b981; font-weight: 800; }
+
+        /* Coparticipação */
+        .copart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .copart-item { padding: 30px; border-radius: 15px; text-align: left; background: #f1f5f9; border-left: 5px solid var(--laranja); }
+        
+        /* Especialidades */
+        .especialidades-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .tag { background: #eef2ff; padding: 12px; border-radius: 10px; font-weight: 600; color: var(--azul-vibrante); font-size: 0.9rem; }
+
+        /* Consultor & Footer */
+        .consultor { background: var(--azul-deep); color: white; padding: 80px 20px; text-align: center; }
+        .consultor-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(8px); padding: 40px; border-radius: 25px; max-width: 650px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.1); }
+        .contatos-footer { margin: 25px 0; text-align: left; display: inline-block; }
+        .contatos-footer p { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-size: 1.1rem; }
+        .contatos-footer a { color: white; text-decoration: none; transition: 0.3s; }
+        .contatos-footer a:hover { color: var(--laranja); }
+
+        .zap-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.2); z-index: 1000; transition: 0.3s; }
+        .zap-float:hover { transform: scale(1.1); }
+
+        footer { background: #0f172a; color: #64748b; text-align: center; padding: 40px 20px; font-size: 0.85rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Consultoria em Saúde Leonardo Aguiar</h1>
+        <p>Especialista Hapvida NotreDame Intermédica. Proteção completa para sua família e máxima economia para sua empresa.</p>
+        <button class="btn" onclick="abrirWhatsApp('Ola,tenho interesse em saber mais sobre os planos de saúde')">Solicitar Cotação Agora</button>
+    </header>
+
+    <section class="secao">
+        <h2>Conheça nossos Planos</h2>
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="filtrarPlanos(event, 'todos')">Ver Todos</button>
+            <button class="tab-btn" onclick="filtrarPlanos(event, 'pf')">Familiar</button>
+            <button class="tab-btn" onclick="filtrarPlanos(event, 'pme')">Empresarial (CNPJ)</button>
+        </div>
+
+        <div class="grid-cards" id="container-planos">
+            <div class="card card-plano card-smart" data-categoria="pf">
+                <h3>Nosso Médico</h3>
+                <ul>
+                    <li>Acompanhamento Preventivo</li>
+                    <li>Equipe de saúde exclusiva</li>
+                    <li>O menor preço para CPF</li>
+                </ul>
+                <button class="btn" onclick="abrirWhatsApp('Ola, tenho interesse em saber mais sobre o plano Nosso Médico')">Simular</button>
+            </div>
+            <div class="card card-plano card-smart" data-categoria="pf">
+                <h3>Nosso Plano</h3>
+                <ul>
+                    <li>Livre acesso à Rede Própria</li>
+                    <li>Urgência e Emergência 24h</li>
+                    <li>Cobertura regional completa</li>
+                </ul>
+                <button class="btn" onclick="abrirWhatsApp('Ola, tenho interesse em saber mais sobre o Nosso Plano')">Simular</button>
+            </div>
+            <div class="card card-plano card-smart" data-categoria="pf">
+                <h3>Smart Up</h3>
+                <ul>
+                    <li>Rede Credenciada Ampliada</li>
+                    <li>Telemedicina 24h VIP</li>
+                    <li>Atendimento nacional de urgência</li>
+                </ul>
+                <button class="btn" onclick="abrirWhatsApp('Ola, tenho interesse em saber mais sobre o plano Smart Up')">Simular</button>
+            </div>
+            <div class="card card-plano card-smart" data-categoria="pme">
+                <h3>Smart 200/500</h3>
+                <ul>
+                    <li>Rede Própria de Alta Performance</li>
+                    <li>Tabelas exclusivas para MEI/CNPJ</li>
+                    <li>Redução drástica de custos</li>
+                </ul>
+                <button class="btn" onclick="abrirWhatsApp('Ola, gostaria de ver a tabela de preços do Smart 200/500 para minha empresa')">Ver Tabela</button>
+            </div>
+            <div class="card card-plano card-advance" data-categoria="pme">
+                <h3>Advance 600/700</h3>
+                <ul>
+                    <li>Hospitais de Referência Nacional</li>
+                    <li>Livre escolha com Reembolso</li>
+                    <li>Acomodação em Apartamento</li>
+                </ul>
+                <button class="btn" onclick="abrirWhatsApp('Ola, tenho interesse em saber mais sobre a linha Advance 600/700')">Ver Tabela</button>
+            </div>
+            <div class="card card-plano card-premium" data-categoria="pme">
+                <h3>Premium 900 (Care)</h3>
+                <ul>
+                    <li>O padrão mais elevado do grupo</li>
+                    <li>Hospitais de Elite (Rede Care)</li>
+                    <li>Maiores reembolsos do mercado</li>
+                </ul>
+                <button class="btn" onclick="abrirWhatsApp('Ola, tenho interesse em saber mais sobre o plano Premium 900 (Care)')">Ver Tabela</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao secao-bg">
+        <h2>Especialidades e Terapias</h2>
+        <p style="margin-bottom: 30px;">Cobertura total em todas as especialidades médicas e terapias multidisciplinares.</p>
+        <div class="especialidades-grid">
+            <div class="tag">Cardiologia</div><div class="tag">Pediatria</div>
+            <div class="tag">Ginecologia</div><div class="tag">Ortopedia</div>
+            <div class="tag">Psicologia</div><div class="tag">Fisioterapia</div>
+            <div class="tag">Fonoaudiologia</div><div class="tag">Neurologia</div>
+        </div>
+        <button class="btn" style="background-color: var(--azul-vibrante); margin-top: 25px;" onclick="abrirWhatsApp('Ola, gostaria de tirar uma dúvida sobre a cobertura de especialidades/terapias')">Consultar Cobertura</button>
+    </section>
+
+    <section class="secao">
+        <h2>Entenda a Coparticipação</h2>
+        <div class="copart-grid">
+            <div class="copart-item">
+                <h4>Coparticipação Parcial</h4>
+                <p>Taxas mínimas apenas em consultas e exames. <strong>Internações e Cirurgias são ISENTAS</strong>.</p>
+                <button class="btn" style="margin-top:15px; padding:10px 20px;" onclick="abrirWhatsApp('Ola, gostaria de entender melhor como funciona a Coparticipação Parcial')">Tirar Dúvida</button>
+            </div>
+            <div class="copart-item" style="border-left-color: var(--azul-vibrante);">
+                <h4>Coparticipação Total</h4>
+                <p>Taxas em todos os eventos médicos. Proporciona a <strong>mensalidade fixa mais barata</strong> do mercado.</p>
+                <button class="btn" style="margin-top:15px; padding:10px 20px;" onclick="abrirWhatsApp('Ola, gostaria de entender melhor como funciona a Coparticipação Total')">Tirar Dúvida</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao secao-bg">
+        <h2>Clube de Vantagens Interclube</h2>
+        <div class="grid-cards">
+            <div class="card">
+                <h4>💊 Farmácias</h4>
+                <p>Até <strong>70% de desconto</strong> em medicamentos nas maiores redes (Drogasil, Pague Menos, etc).</p>
+            </div>
+            <div class="card">
+                <h4>⚡ Conta de Luz</h4>
+                <p>Economia mensal na fatura via parceria sustentável exclusiva.</p>
+            </div>
+            <div class="card">
+                <h4>🛒 Compras e Lazer</h4>
+                <p>Descontos em lojas parceiras como Magalu, Netshoes e cinemas.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="consultor">
+        <div class="consultor-card">
+            <h3 style="font-size: 1.8rem;">Leonardo Aguiar</h3>
+            <p style="color: var(--laranja); font-weight: 700; margin: 15px 0; letter-spacing: 1px;">CONSULTOR AUTORIZADO HAPVIDA NDI</p>
+            
+            <div class="contatos-footer">
+                <p>📞 <a href="https://api.whatsapp.com/send?phone=5511934319676" target="_blank">(11) 93431-9676</a></p>
+                <p>📸 <a href="https://www.instagram.com/leonardo_hapvida/" target="_blank">@leonardo_hapvida</a></p>
+                <p>🔵 <a href="https://www.facebook.com/Leonardo.aguiar.corretor" target="_blank">Facebook Profissional</a></p>
+                <p>✉️ <a href="mailto:leonardo.moreira.hapvida@gmail.com">leonardo.moreira.hapvida@gmail.com</a></p>
+            </div>
+            <br>
+            <button class="btn" onclick="abrirWhatsApp('Ola Leonardo! Vi seu perfil no site e gostaria de iniciar um atendimento')">Chamar no WhatsApp</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Leonardo Aguiar | Consultoria Estratégica Hapvida NotreDame Intermédica</p>
+        <p style="font-size: 0.7rem; margin-top: 10px; opacity: 0.6;">Atendimento consultivo especializado para Fortaleza, São Paulo e todo o Brasil.</p>
+    </footer>
+
+    <a href="#" class="zap-float" onclick="abrirWhatsApp('Ola,tenho interesse em saber mais sobre os planos de saúde')">
+        <svg style="width:35px;height:35px;fill:white" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.005-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+    </a>
+
+    <script>
+        function abrirWhatsApp(mensagem) {
+            const numero = "5511934319676";
+            const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensagem)}`;
+            window.open(url, '_blank');
+        }
+
+        function filtrarPlanos(evento, categoria) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            evento.target.classList.add('active');
+            document.querySelectorAll('.card-plano').forEach(card => {
+                if (categoria === 'todos' || card.dataset.categoria === categoria) {
+                    card.classList.remove('plano-escondido');
+                } else {
+                    card.classList.add('plano-escondido');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
